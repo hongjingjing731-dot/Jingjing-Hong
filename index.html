@@ -25,20 +25,21 @@
     /* ---------- HOME ---------- */
 
     .hero {
-      min-height: 100vh;
-      position: relative;
-      padding: 7vh 8vw;
-      overflow: hidden;
-    }
+  min-height: 100vh;
+  position: relative;
+  padding: 7vh 7vw;
+  overflow: hidden;
+}
 
     nav {
-      display: flex;
-      justify-content: center;
-      gap: 4vw;
-      font-size: 14px;
-      font-weight: 700;
-      letter-spacing: .02em;
-    }
+  display: flex;
+  justify-content: flex-start;
+  margin-left: 1vw;
+  gap: 6vw;
+  font-family: "DM Sans", Arial, sans-serif;
+  font-size: clamp(14px, 1.3vw, 20px);
+  font-weight: 700;
+}
 
     nav a {
       color: #4a2b25;
@@ -49,29 +50,30 @@
       color: #c7371c;
     }
 
-    .name {
-      margin-top: 8vh;
-      text-align: center;
-      font-family: Georgia, serif;
-      font-style: italic;
-      font-weight: 700;
-      font-size: clamp(90px, 13vw, 190px);
-      line-height: .72;
-      letter-spacing: -0.07em;
-      color: #c7371c;
-    }
+    .name-logo {
+  position: absolute;
+  left: 7.5vw;
+  top: 17vh;
+  width: min(52vw, 760px);
+}
+
+.name-logo img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
 
     .what-i-do {
-      position: absolute;
-      right: 9vw;
-      bottom: 9vh;
-      color: #c7371c;
-      font-size: clamp(14px, 1.4vw, 22px);
-      line-height: 1.05;
-      letter-spacing: .05em;
-      font-weight: 700;
-      text-transform: uppercase;
-    }
+  position: absolute;
+  left: 53vw;
+  top: 69vh;
+  color: #cc351c;
+  font-size: clamp(15px, 1.45vw, 23px);
+  line-height: 1.08;
+  letter-spacing: .04em;
+  font-weight: 400;
+  text-transform: uppercase;
+}
 
     /* ---------- WORK ---------- */
 
@@ -305,9 +307,9 @@
       <a href="#contact">04 / CONTACT</a>
     </nav>
 
-    <div class="name">
-      Jingjing<br>Hong
-    </div>
+    <div class="name-logo">
+  <img src="未命名的设计 (1).png" alt="Jingjing Hong">
+</div>
 
     <div class="what-i-do">
       WHAT I DO /<br>
