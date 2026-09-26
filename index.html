@@ -3,11 +3,417 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Jingjing Hong</title>
+  <title>Jingjing Hong — Portfolio</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: #e7dfc5;
+      color: #4a2b25;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    /* ---------- HOME ---------- */
+
+    .hero {
+      min-height: 100vh;
+      position: relative;
+      padding: 7vh 8vw;
+      overflow: hidden;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 4vw;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: .02em;
+    }
+
+    nav a {
+      color: #4a2b25;
+      text-decoration: none;
+    }
+
+    nav a:hover {
+      color: #c7371c;
+    }
+
+    .name {
+      margin-top: 8vh;
+      text-align: center;
+      font-family: Georgia, serif;
+      font-style: italic;
+      font-weight: 700;
+      font-size: clamp(90px, 13vw, 190px);
+      line-height: .72;
+      letter-spacing: -0.07em;
+      color: #c7371c;
+    }
+
+    .what-i-do {
+      position: absolute;
+      right: 9vw;
+      bottom: 9vh;
+      color: #c7371c;
+      font-size: clamp(14px, 1.4vw, 22px);
+      line-height: 1.05;
+      letter-spacing: .05em;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    /* ---------- WORK ---------- */
+
+    .work {
+      min-height: 100vh;
+      padding: 9vh 7vw;
+      position: relative;
+      border-top: 1px solid rgba(199,55,28,.12);
+    }
+
+    .section-label {
+      color: #c7371c;
+      font-size: 15px;
+      letter-spacing: .08em;
+      font-weight: 700;
+      margin-bottom: 7vh;
+    }
+
+    .project {
+      display: grid;
+      grid-template-columns: 1.3fr .7fr;
+      gap: 7vw;
+      align-items: center;
+      min-height: 75vh;
+    }
+
+    /* ---------- DECK ---------- */
+
+    .deck {
+      position: relative;
+      height: 520px;
+      max-width: 760px;
+    }
+
+    .slide {
+      position: absolute;
+      width: min(46vw, 520px);
+      aspect-ratio: 16 / 9;
+      background: #f4f2ee;
+      border: 1px solid rgba(0,0,0,.08);
+      box-shadow: 7px 8px 0 rgba(61,54,42,.35);
+      cursor: zoom-in;
+
+      opacity: 0;
+      transform: translate(0,0);
+      transition:
+        transform .85s cubic-bezier(.2,.8,.2,1),
+        opacity .5s ease,
+        box-shadow .25s ease;
+    }
+
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Temporary placeholders */
+    .placeholder {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      letter-spacing: .08em;
+      color: #777;
+    }
+
+    /* Initial stack */
+    .slide:nth-child(1) { z-index: 6; }
+    .slide:nth-child(2) { z-index: 5; }
+    .slide:nth-child(3) { z-index: 4; }
+    .slide:nth-child(4) { z-index: 3; }
+    .slide:nth-child(5) { z-index: 2; }
+    .slide:nth-child(6) { z-index: 1; }
+
+    /* Spread when section enters viewport */
+    .deck.show .slide {
+      opacity: 1;
+    }
+
+    .deck.show .slide:nth-child(1) {
+      transform: translate(0px, 0px);
+    }
+
+    .deck.show .slide:nth-child(2) {
+      transform: translate(35px, 28px);
+    }
+
+    .deck.show .slide:nth-child(3) {
+      transform: translate(70px, 56px);
+    }
+
+    .deck.show .slide:nth-child(4) {
+      transform: translate(105px, 84px);
+    }
+
+    .deck.show .slide:nth-child(5) {
+      transform: translate(140px, 112px);
+    }
+
+    .deck.show .slide:nth-child(6) {
+      transform: translate(175px, 140px);
+    }
+
+    .deck.show .slide:hover {
+      z-index: 20;
+      box-shadow: 12px 14px 24px rgba(40,35,28,.2);
+    }
+
+    .project-copy {
+      max-width: 430px;
+    }
+
+    .project-number {
+      color: #c7371c;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      margin-bottom: 16px;
+    }
+
+    .project-copy h2 {
+      color: #c7371c;
+      font-size: clamp(36px, 4vw, 64px);
+      line-height: .95;
+      margin-bottom: 18px;
+    }
+
+    .tags {
+      font-size: 12px;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+    }
+
+    .description {
+      font-size: 16px;
+      line-height: 1.6;
+      color: #493c34;
+    }
+
+    /* ---------- LIGHTBOX ---------- */
+
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(25,21,17,.88);
+      z-index: 999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 5vh 5vw;
+      cursor: zoom-out;
+    }
+
+    .lightbox.open {
+      display: flex;
+    }
+
+    .lightbox-content {
+      width: min(1100px, 90vw);
+      max-height: 88vh;
+      object-fit: contain;
+      background: #f5f3ed;
+    }
+
+    .lightbox-placeholder {
+      width: min(1100px, 90vw);
+      aspect-ratio: 16 / 9;
+      background: #f5f3ed;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      color: #555;
+    }
+
+    .close {
+      position: fixed;
+      top: 28px;
+      right: 38px;
+      color: white;
+      font-size: 38px;
+      cursor: pointer;
+    }
+
+    /* ---------- RESPONSIVE ---------- */
+
+    @media (max-width: 850px) {
+      nav {
+        gap: 18px;
+        font-size: 11px;
+      }
+
+      .name {
+        margin-top: 14vh;
+        font-size: 22vw;
+      }
+
+      .what-i-do {
+        left: 8vw;
+        right: auto;
+      }
+
+      .project {
+        display: block;
+      }
+
+      .deck {
+        height: 420px;
+        margin-bottom: 80px;
+      }
+
+      .slide {
+        width: 68vw;
+      }
+    }
+  </style>
 </head>
 
 <body>
-  <h1>Jingjing Hong</h1>
-  <p>Ideas, content & strategy across music, fashion & the internet.</p>
+
+  <!-- HOME -->
+  <section class="hero" id="home">
+
+    <nav>
+      <a href="#work">01 / WORK</a>
+      <a href="#content">02 / CONTENT</a>
+      <a href="#about">03 / ABOUT</a>
+      <a href="#contact">04 / CONTACT</a>
+    </nav>
+
+    <div class="name">
+      Jingjing<br>Hong
+    </div>
+
+    <div class="what-i-do">
+      WHAT I DO /<br>
+      IDEAS, CONTENT &amp; STRATEGY<br>
+      ACROSS MUSIC, FASHION &amp; THE INTERNET
+    </div>
+
+  </section>
+
+
+  <!-- WORK -->
+  <section class="work" id="work">
+
+    <div class="section-label">01 / SELECTED WORK</div>
+
+    <div class="project">
+
+      <div class="deck" id="elvisDeck">
+
+        <div class="slide placeholder">TARGET CUSTOMERS</div>
+        <div class="slide placeholder">LEVI'S RESEARCH</div>
+        <div class="slide placeholder">MUSIC MARKETING CASES</div>
+        <div class="slide placeholder">ELVIS / FASHION</div>
+        <div class="slide placeholder">CAMPAIGN RESEARCH</div>
+        <div class="slide placeholder">TRACK RECOMMENDATION</div>
+
+      </div>
+
+      <div class="project-copy">
+
+        <div class="project-number">PROJECT 01 /</div>
+
+        <h2>ELVIS × LEVI'S</h2>
+
+        <div class="tags">
+          MUSIC MARKETING · BRAND PARTNERSHIP · STRATEGY
+        </div>
+
+        <p class="description">
+          Developed during my time at Universal Music Publishing,
+          this project explored a potential partnership between
+          Elvis Presley's catalog and Levi's.
+          <br><br>
+          The project combined audience and brand research,
+          analysis of Levi's music-led campaigns, Elvis's relationship
+          with fashion and denim, and track recommendations for
+          potential campaign directions.
+        </p>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- Empty sections for navigation -->
+  <section id="content"></section>
+  <section id="about"></section>
+  <section id="contact"></section>
+
+
+  <!-- IMAGE LIGHTBOX -->
+  <div class="lightbox" id="lightbox">
+    <span class="close">&times;</span>
+    <div class="lightbox-placeholder">
+      LARGE SLIDE PREVIEW
+    </div>
+  </div>
+
+
+  <script>
+    const deck = document.getElementById("elvisDeck");
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          deck.classList.add("show");
+        }
+      });
+    }, {
+      threshold: 0.3
+    });
+
+    observer.observe(deck);
+
+
+    const slides = document.querySelectorAll(".slide");
+    const lightbox = document.getElementById("lightbox");
+
+    slides.forEach(slide => {
+      slide.addEventListener("click", () => {
+        lightbox.classList.add("open");
+      });
+    });
+
+    lightbox.addEventListener("click", () => {
+      lightbox.classList.remove("open");
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        lightbox.classList.remove("open");
+      }
+    });
+  </script>
+
 </body>
 </html>
